@@ -30,7 +30,7 @@ A modern and responsive trading dashboard built with **React**, **TypeScript**, 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/trading-dashboard.git
+   git clone https://github.com/gauravmehra13/tradingDashboard
    ```
 2. Navigate to the project directory:
    ```bash
@@ -101,4 +101,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 For questions or feedback, feel free to reach out:
 
 - **Email**: gauravmehra2470@.com
-- **GitHub**: [your-username](https://github.com/gauravmehra13)
+- **GitHub**: [gauravmehra13](https://github.com/gauravmehra13)
