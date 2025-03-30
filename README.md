@@ -1,7 +1,5 @@
 # Trading Dashboard
 
-![Trading Dashboard Screenshot](src/assets/screenshot.png)
-
 A modern and responsive trading dashboard built with **React**, **TypeScript**, and **Tailwind CSS**. This application provides real-time trading data visualization, including price charts, moving averages, and trading signals.
 
 ---

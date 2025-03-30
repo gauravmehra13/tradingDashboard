@@ -35,8 +35,8 @@ export default function Sidebar({ isOpen }: SidebarProps) {
             className={({ isActive }) =>
               `flex items-center px-4 py-3 mx-2 mb-2 rounded-lg transition-colors ${
                 isActive
-                  ? "bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white"
-                  : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900"
+                  ? "bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-white"
+                  : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-950"
               }`
             }
           >
@@ -48,7 +48,7 @@ export default function Sidebar({ isOpen }: SidebarProps) {
         <div className="mt-auto px-4 py-3 z-1">
           <Popover.Root>
             <Popover.Trigger asChild>
-              <button className="flex items-center w-full p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors">
+              <button className="flex items-center w-full p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-950 transition-colors">
                 <User className="w-6 h-6 flex-shrink-0" />
                 {isOpen && <span className="ml-3">User</span>}
               </button>
