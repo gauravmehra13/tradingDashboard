@@ -29,36 +29,52 @@ export function useTrading(symbol: string = 'btcusdt', shortPeriod: number = 5, 
     const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@trade`);
     wsRef.current = ws;
 
+    ws.onopen = () => {
+      console.log(`WebSocket connection opened for symbol: ${symbol}`);
+    };
+
+    ws.onerror = (error) => {
+      console.error(`WebSocket error for symbol ${symbol}:`, error);
+    };
+
+    ws.onclose = () => {
+      console.log(`WebSocket connection closed for symbol: ${symbol}`);
+    };
+
     ws.onmessage = (event) => {
-      const tradeData = JSON.parse(event.data);
-      const timestamp = tradeData.T;
+      try {
+        const tradeData = JSON.parse(event.data);
+        const timestamp = tradeData.T;
 
-      if (timestamp <= lastTimestampRef.current) {
-        return;
+        if (timestamp <= lastTimestampRef.current) {
+          return;
+        }
+
+        const trade: Trade = {
+          price: parseFloat(tradeData.p),
+          timestamp,
+        };
+
+        lastTimestampRef.current = timestamp;
+        
+        tradesRef.current = [...tradesRef.current.slice(-99), trade]
+          .sort((a, b) => a.timestamp - b.timestamp);
+
+        const shortMA = calculateMA(shortPeriod);
+        const longMA = calculateMA(longPeriod);
+        const prevShortMA = calculateMA(shortPeriod - 1);
+        const prevLongMA = calculateMA(longPeriod - 1);
+
+        setData({
+          currentPrice: trade.price,
+          shortMA,
+          longMA,
+          signal: updateSignal(shortMA, longMA, prevShortMA, prevLongMA),
+          trades: tradesRef.current,
+        });
+      } catch (error) {
+        console.error('Error processing WebSocket message:', error);
       }
-
-      const trade: Trade = {
-        price: parseFloat(tradeData.p),
-        timestamp,
-      };
-
-      lastTimestampRef.current = timestamp;
-      
-      tradesRef.current = [...tradesRef.current.slice(-99), trade]
-        .sort((a, b) => a.timestamp - b.timestamp);
-
-      const shortMA = calculateMA(shortPeriod);
-      const longMA = calculateMA(longPeriod);
-      const prevShortMA = calculateMA(shortPeriod - 1);
-      const prevLongMA = calculateMA(longPeriod - 1);
-
-      setData({
-        currentPrice: trade.price,
-        shortMA,
-        longMA,
-        signal: updateSignal(shortMA, longMA, prevShortMA, prevLongMA),
-        trades: tradesRef.current,
-      });
     };
 
     return () => {
