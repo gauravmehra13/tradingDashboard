@@ -12,6 +12,7 @@ import * as Popover from "@radix-ui/react-popover";
 
 interface SidebarProps {
   isOpen: boolean;
+  isMobile: boolean;
 }
 
 const navigation = [
@@ -20,12 +21,20 @@ const navigation = [
   { name: "Settings", icon: Settings, path: "/settings" },
 ];
 
-export default function Sidebar({ isOpen }: SidebarProps) {
+export default function Sidebar({ isOpen, isMobile }: SidebarProps) {
   return (
     <aside
-      className={`fixed left-0 top-14 h-[calc(100vh-3.5rem)] bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 transition-all duration-300 ${
-        isOpen ? "w-64" : "w-20"
-      }`}
+      className={`fixed top-14 h-[calc(100vh-3.5rem)] bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 transition-all duration-300 
+      ${
+        isMobile
+          ? isOpen
+            ? "left-0 w-64"
+            : "-left-64 w-64"
+          : isOpen
+          ? "left-0 w-64"
+          : "left-0 w-20"
+      } 
+      ${isMobile ? "z-50 shadow-lg" : "z-0"}`}
     >
       <div className="flex flex-col h-full py-4">
         {navigation.map((item) => (
