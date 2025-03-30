@@ -12,14 +12,14 @@ export default function Layout() {
       const mobileView = window.innerWidth < 768;
       setIsMobile(mobileView);
       if (mobileView) {
-        setSidebarOpen(false); // Auto-hide on mobile
+        setSidebarOpen(false);
       } else {
-        setSidebarOpen(false); // Keep expanded on desktop
+        setSidebarOpen(false);
       }
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize(); // Initial setup
+    handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -29,7 +29,6 @@ export default function Layout() {
       <Navbar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
 
       <div className="flex">
-        {/* Mobile Sidebar Backdrop */}
         {isMobile && sidebarOpen && (
           <div
             className="fixed inset-0 bg-black bg-opacity-50 z-40"
@@ -39,7 +38,6 @@ export default function Layout() {
 
         <Sidebar isOpen={sidebarOpen} isMobile={isMobile} />
 
-        {/* Main Content */}
         <main
           className={`flex-1 p-6 transition-all duration-300 ${
             sidebarOpen && !isMobile ? "ml-64" : isMobile ? "ml-0" : "ml-20"
