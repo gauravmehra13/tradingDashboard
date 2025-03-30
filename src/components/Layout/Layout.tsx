@@ -4,7 +4,7 @@ import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 
 export default function Layout() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 768);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
@@ -12,14 +12,14 @@ export default function Layout() {
       const mobileView = window.innerWidth < 768;
       setIsMobile(mobileView);
       if (mobileView) {
-        setSidebarOpen(false);
+        setSidebarOpen(false); 
       } else {
-        setSidebarOpen(false);
+        setSidebarOpen(true); 
       }
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize();
+    handleResize(); 
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
